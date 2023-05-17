@@ -1,0 +1,26 @@
+{
+  "name": "timefit-express",
+  "version": "1.0.0",
+  "description": "backend for tomefit web app for Uni",
+  "main": "inedex.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxstepanyuk/timefit.git"
+  },
+  "keywords": [
+    "timer",
+    "js"
+  ],
+  "author": "maks step",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxstepanyuk/timefit/issues"
+  },
+  "homepage": "https://github.com/maxstepanyuk/timefit#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
