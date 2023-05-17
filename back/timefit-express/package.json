@@ -2,7 +2,7 @@
   "name": "timefit-express",
   "version": "1.0.0",
   "description": "backend for tomefit web app for Uni",
-  "main": "inedex.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
