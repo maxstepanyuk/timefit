@@ -1,0 +1,6 @@
+$ node -v
+$ node index.js
+$ npm init
+$ npm install express
+$ npm install nodemon 
+$ npm start 
