@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "backend for tomefit web app for Uni",
   "main": "inedex.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "start:dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
   },
   "homepage": "https://github.com/maxstepanyuk/timefit#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
   }
 }
