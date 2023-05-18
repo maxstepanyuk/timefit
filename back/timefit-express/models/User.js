@@ -3,15 +3,11 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema(
   {
     login: {
-        type: String,
-        required: true,  
-        unique: true,
-    },
-    name: {
       type: String,
       required: true,
       unique: true,
     },
+    name: String,
     email: {
       type: String,
       required: true,
@@ -21,7 +17,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    avatarUrl: String,
   },
   {
     timestamps: true,
