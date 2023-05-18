@@ -1,6 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import { validationResult } from 'express-validator';
+
+import { registrationValidation } from './validations/registrationValidation.js'
 
 dotenv.config() //to get date from .env file
 const PORT = process.env.PORT || 4444 //get port from env file or use 5000
@@ -16,9 +19,19 @@ const app = express(); // Creating an instance of the express application
 app.use(express.json()) // Middleware to parse incoming JSON data
 
 // Handling GET request to the root URL ('/')
-app.get('/', (req, res) => {
-    res.send('send help...');
-})
+app.get('/', (req, res) => {res.send('OK');});
+
+app.post('/auth/registration', registrationValidation, (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors.array());
+    }
+
+    res.json({
+        succes: true,
+        message: "The user is successfully registered"
+    })
+});
 
 // Starting the server on port 4444 and handling any potential errors
 app.listen(PORT, (err) => {
