@@ -33,7 +33,25 @@ app.post('/auth/registration', registrationValidation, async (req, res) => {
             return res.status(400).json(errors.array());
         }
         //get data from req
-        const { login, name, email, password } = req.body;    
+        const { login, name, email, password } = req.body;   
+        //check in db
+        const candidateLogin = await UserModel.findOne({ login }) //find by username
+        const candidateEmail = await UserModel.findOne({ email }) //find by email
+        const errorMessages = {};        
+        let errorLogin;        
+
+        if (candidateLogin) {
+            errorMessages.login = "A user with that login already exists";
+        }
+        if (candidateEmail) {
+            errorMessages.email = "A user with that email already exists";
+        }
+        if (Object.keys(errorMessages).length > 0) {
+            return res.status(409).json({ 
+              success: false,
+              errorMessages,
+            });
+        }
         //pass hash (salt - random data)
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
@@ -61,6 +79,15 @@ app.post('/auth/registration', registrationValidation, async (req, res) => {
             succes: false,
             message: "Registration error"
         })
+    }
+});
+
+//
+app.post('/auth/login', async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
     }
 });
 
