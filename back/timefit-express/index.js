@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4444 //get port from env file or use 5000
 const USER = process.env.USER
 const PASS = process.env.PASS
 
-mongoose.connect(`mongodb+srv://${USER}:${PASS}@cluster0.r1umkoa.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://${USER}:${PASS}@cluster0.r1umkoa.mongodb.net/timefit?retryWrites=true&w=majority`)
 .then(() => console.log('mongodb ok'))
 .catch((err) => console.log('mongodb error', err));
 
