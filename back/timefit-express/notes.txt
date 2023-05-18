@@ -4,3 +4,7 @@ $ npm init
 $ npm install express
 $ npm install nodemon 
 $ npm start 
+
+$ npm install mongodb
+$ npm install mongoose
+$ npm install dotenv
