@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import { registrationValidation } from './validations/registrationValidation.js'
 
@@ -12,6 +13,8 @@ dotenv.config() //to get date from .env file
 const PORT = process.env.PORT || 4444 //get port from env file or use 5000
 const USER = process.env.USER
 const PASS = process.env.PASS
+
+const JWT_SECRET = process.env.JWT_SECRET
 
 mongoose.connect(`mongodb+srv://${USER}:${PASS}@cluster0.r1umkoa.mongodb.net/timefit?retryWrites=true&w=majority`)
 .then(() => console.log('mongodb ok'))
@@ -82,12 +85,41 @@ app.post('/auth/registration', registrationValidation, async (req, res) => {
     }
 });
 
-//
+const generateJwt = (payload) => {
+// const generateJwt = (id, roles) => {
+    // const payload = { id, roles }
+    return jwt.sign(payload, JWT_SECRET, {expiresIn: "5m"})
+}
+
+//login post
 app.post('/auth/login', async (req, res) => {
     try {
-        
+        //get dada from req
+        const { login, password } = req.body;
+        //check in db
+        const user = await UserModel.findOne({ login }); //find by login
+        if (!user) {
+            // return res.status(404).json({succes: false,message: `User ${username} not found`});
+            return res.status(404).json({succes: false, message: `Incorrect login or password`});
+        }
+        //check password and hash for found user
+        const validPassword = bcrypt.compareSync(password, user.password)
+        if (!validPassword) {
+            return res.status(404).json({succes: false, message: `Incorrect login or password`});
+        }
+        //gwt
+        const token = generateJwt({_id: user._id})
+        //response
+        return res.status(202).json({
+            token,
+            succes: true,
+        });
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).json({
+            succes: false,
+            message: "login error"
+        })
     }
 });
 
