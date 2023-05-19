@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import { registrationValidation } from './validations/registrationValidation.js'
 
 import  UserModel from './models/User.js'
+import  authMiddleware from './middleware/authMiddleware.js'
 
 dotenv.config() //to get date from .env file
 const PORT = process.env.PORT || 4444 //get port from env file or use 5000
@@ -108,7 +109,7 @@ app.post('/auth/login', async (req, res) => {
             return res.status(404).json({succes: false, message: `Incorrect login or password`});
         }
         //gwt
-        const token = generateJwt({_id: user._id})
+        const token = generateJwt({id: user._id})
         //response
         return res.status(202).json({
             token,
@@ -122,6 +123,32 @@ app.post('/auth/login', async (req, res) => {
         })
     }
 });
+
+//login post
+app.get('/auth/myinfo', authMiddleware, async (req, res) => {
+    try {
+        //get dada from req
+        const id = req.body.user.id;
+        // check in db and get info
+        const userInfo = await UserModel.findOne({ _id:id }); //find by fiedl _id wuth the walue of the id const
+        if (!userInfo) {
+            return res.status(404).json({message: `No user found`});
+        }
+        //remove password from response
+        const {password, ...user} = userInfo._doc
+        //response
+        return res.status(200).json({
+            user,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            succes: false,
+            message: "myinfo error"
+        })
+    }
+});
+
 
 // Starting the server on port 4444 and handling any potential errors
 app.listen(PORT, (err) => {
