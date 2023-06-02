@@ -8,8 +8,8 @@ import authMiddleware from './middleware/authMiddleware.js'
 
 import * as UserController from './controllers/userController.js'
 
-dotenv.config() //to get date from .env file
-const PORT = process.env.PORT || 4444 //get port from env file or use 5000
+dotenv.config() //to get data from .env file
+const PORT = process.env.PORT
 const USER = process.env.USER
 const PASS = process.env.PASS
 
