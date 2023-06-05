@@ -27,3 +27,22 @@ export const create = async (req, res) => {
         res.status(500).json({ error: 'Failed to create workout' });
     }
 };
+
+export const getAll = async (req, res) => {
+    try {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        
+        // Get the workouts from the database
+        const workouts = await Workout.find();
+        // const workouts = await Workout.find().populate('user').exec(); //get full user info
+
+        res.json(workouts);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to find workouts' });
+    }
+};
