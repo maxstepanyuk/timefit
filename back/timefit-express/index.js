@@ -34,7 +34,7 @@ app.get('/workouts', authMiddleware, WorkoutController.getAll);
 app.get('/workouts/me', authMiddleware, WorkoutController.getAllByCurrentUser);
 app.get('/workouts/:id', authMiddleware, WorkoutController.getOne);
 app.get('/workouts/user/:userId', authMiddleware, WorkoutController.getAllByUserId);
-
+app.delete('/workouts/:id', authMiddleware, WorkoutController.remove);
 
 // Starting the server on port 4444 and handling any potential errors
 app.listen(PORT, (err) => {

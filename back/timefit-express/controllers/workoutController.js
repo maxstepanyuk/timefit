@@ -110,3 +110,28 @@ export const getOne = async (req, res) => {
         res.status(500).json({ error: 'Failed to find workout' });
     }
 };
+
+export const remove = async (req, res) => {
+    try {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        //get data from req
+        const workoutId = req.params.id;
+
+        // Check if the workout exists in the database
+        const workout = await Workout.findOneAndDelete({ _id: workoutId });
+        if (!workout) {
+            return res.status(404).json({ error: 'Workout not found' });
+        }
+
+        //response
+        return res.json({ message: 'Workout deleted successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to delete workout' });
+    }
+};
