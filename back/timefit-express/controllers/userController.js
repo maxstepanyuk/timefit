@@ -81,11 +81,14 @@ export const login = async (req, res) => {
                 message: `Incorrect login or password` 
             });
         }
+        //get _id and set value to id
+        const { _id: id } = user._id; 
         //gwt
-        const token = generateJwt({ id: user._id })
+        const token = generateJwt({ id })
         //response
         return res.status(202).json({
             token,
+            // id,
         });
     } catch (error) {
         console.log(error);
