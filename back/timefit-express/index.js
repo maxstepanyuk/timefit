@@ -32,6 +32,7 @@ app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
 app.post('/workouts', authMiddleware, workoutValidation, WorkoutController.create);
 app.get('/workouts', authMiddleware, WorkoutController.getAll);
 app.get('/workouts/:id', authMiddleware, WorkoutController.getOne);
+app.get('/workouts/user/:userId', authMiddleware, WorkoutController.getAllByUserId);
 
 
 // Starting the server on port 4444 and handling any potential errors

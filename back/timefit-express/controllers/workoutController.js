@@ -35,9 +35,30 @@ export const getAll = async (req, res) => {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        
+
         // Get the workouts from the database
         const workouts = await Workout.find();
+        // const workouts = await Workout.find().populate('user').exec(); //get full user info
+
+        res.json(workouts);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to find workouts' });
+    }
+};
+
+export const getAllByUserId = async (req, res) => {
+    try {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        //get data from req
+        const userId = req.params.userId;
+
+        // Get the workouts from the database
+        const workouts = await Workout.find({ user: userId });
         // const workouts = await Workout.find().populate('user').exec(); //get full user info
 
         res.json(workouts);
@@ -54,7 +75,7 @@ export const getOne = async (req, res) => {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        
+
         //get data from req
         const workoutId = req.params.id;
 
