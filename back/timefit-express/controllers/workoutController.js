@@ -46,3 +46,25 @@ export const getAll = async (req, res) => {
         res.status(500).json({ error: 'Failed to find workouts' });
     }
 };
+
+export const getOne = async (req, res) => {
+    try {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        
+        //get data from req
+        const workoutId = req.params.id;
+
+        // Get the workouts from the database
+        const workout = await Workout.findOne({ _id: workoutId })
+
+        //response
+        res.json(workout);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to find workout' });
+    }
+};
