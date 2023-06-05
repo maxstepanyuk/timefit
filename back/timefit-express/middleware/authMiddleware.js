@@ -18,7 +18,6 @@ export default (req, res, next) => {
         //if token doesnt exist 
         if (!token) {
             return res.status(403).json({
-                succes: false,
                 message: "not authorized"
             })
         }

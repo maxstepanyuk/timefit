@@ -28,7 +28,6 @@ export const registration = async (req, res) => {
         }
         if (Object.keys(errorMessages).length > 0) {
             return res.status(409).json({
-                success: false,
                 errorMessages,
             });
         }
@@ -48,7 +47,6 @@ export const registration = async (req, res) => {
         //feedback
         const { _id: id } = savedUser._doc; //get _id and set value to id
         res.json({
-            succes: true,
             message: "The user is successfully registered",
             // userDoc, savedUser,
             id
@@ -56,7 +54,6 @@ export const registration = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            succes: false,
             message: "Registration error"
         })
     }
@@ -73,25 +70,26 @@ export const login = async (req, res) => {
         //check in db
         const user = await UserModel.findOne({ login }); //find by login
         if (!user) {
-            // return res.status(404).json({succes: false,message: `User ${username} not found`});
-            return res.status(404).json({ succes: false, message: `Incorrect login or password` });
+            return res.status(404).json({
+                message: `Incorrect login or password` 
+            });
         }
         //check password and hash for found user
         const validPassword = bcrypt.compareSync(password, user.password)
         if (!validPassword) {
-            return res.status(404).json({ succes: false, message: `Incorrect login or password` });
+            return res.status(404).json({
+                message: `Incorrect login or password` 
+            });
         }
         //gwt
         const token = generateJwt({ id: user._id })
         //response
         return res.status(202).json({
             token,
-            succes: true,
         });
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            succes: false,
             message: "login error"
         })
     }
@@ -115,7 +113,6 @@ export const myinfo = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            succes: false,
             message: "myinfo error"
         })
     }
