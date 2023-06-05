@@ -1,7 +1,7 @@
 import Workout from './../models/Workout.js';
 import { validationResult } from 'express-validator';
 
-export const createWorkout = async (req, res) => {
+export const create = async (req, res) => {
     try {
         // Check for validation errors
         const errors = validationResult(req);

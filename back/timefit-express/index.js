@@ -29,7 +29,7 @@ app.post('/auth/registration', registrationValidation, UserController.registrati
 app.post('/auth/login', UserController.login);
 app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
 
-app.post('/workouts', authMiddleware, workoutValidation, WorkoutController.createWorkout);
+app.post('/workouts', authMiddleware, workoutValidation, WorkoutController.create);
 
 // Starting the server on port 4444 and handling any potential errors
 app.listen(PORT, (err) => {
