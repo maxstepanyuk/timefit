@@ -31,6 +31,7 @@ app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
 
 app.post('/workouts', authMiddleware, workoutValidation, WorkoutController.create);
 app.get('/workouts', authMiddleware, WorkoutController.getAll);
+app.get('/workouts/me', authMiddleware, WorkoutController.getAllByCurrentUser);
 app.get('/workouts/:id', authMiddleware, WorkoutController.getOne);
 app.get('/workouts/user/:userId', authMiddleware, WorkoutController.getAllByUserId);
 
