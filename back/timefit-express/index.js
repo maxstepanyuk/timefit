@@ -3,10 +3,12 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 import { registrationValidation } from './validations/registrationValidation.js'
+import { workoutValidation } from './validations/workoutValidation.js'
 
 import authMiddleware from './middleware/authMiddleware.js'
 
 import * as UserController from './controllers/userController.js'
+import * as WorkoutController from './controllers/workoutController.js';
 
 dotenv.config() //to get data from .env file
 const PORT = process.env.PORT
@@ -26,6 +28,8 @@ app.get('/', (req, res) => { res.send('OK'); });
 app.post('/auth/registration', registrationValidation, UserController.registration);
 app.post('/auth/login', UserController.login);
 app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
+
+app.post('/workouts', authMiddleware, workoutValidation, WorkoutController.createWorkout);
 
 // Starting the server on port 4444 and handling any potential errors
 app.listen(PORT, (err) => {
