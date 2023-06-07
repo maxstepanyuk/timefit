@@ -135,3 +135,41 @@ export const remove = async (req, res) => {
         res.status(500).json({ error: 'Failed to delete workout' });
     }
 };
+
+export const update = async (req, res) => {
+    try {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        //get data from req
+        const workoutId = req.params.id;
+        
+        //get data from body
+        const userId = req.body.user.id;
+
+        // Create a workout
+        const updatedWorkoutData = req.body;
+        updatedWorkoutData.user = userId;
+
+        // Find the workout by its ID and update it
+        const updatedWorkout = await Workout.findByIdAndUpdate(
+            workoutId,
+            updatedWorkoutData,
+            { new: true, }
+        );
+
+        // Check if the workout exists in the database
+        if (!updatedWorkout) {
+            return res.status(404).json({ message: 'Workout not found' });
+        }
+
+        //response
+        return res.json(updatedWorkout);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Failed to update workout' });
+    }
+};
