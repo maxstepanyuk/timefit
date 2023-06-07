@@ -25,7 +25,8 @@ const app = express(); // Creating an instance of the express application
 app.use(express.json()) // Middleware to parse incoming JSON data
 
 // Handling requests
-app.get('/', (req, res) => { res.send('OK'); });
+app.get('/', (req, res) => { res.status(200).send('OK'); });
+
 app.post('/auth/registration', registrationValidation, validationErrorsMiddleware, UserController.registration);
 app.post('/auth/login', UserController.login);
 app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
