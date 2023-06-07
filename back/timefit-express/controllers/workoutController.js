@@ -3,12 +3,6 @@ import { validationResult } from 'express-validator';
 
 export const create = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
         // Create a new workout based on the validated request body
         // "user: req.body.user.id" comes from "middleware/authMiddleware.js"
         const workoutDoc = new Workout({
@@ -30,12 +24,6 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
         // Get the workouts from the database
         const workouts = await Workout.find();
         // const workouts = await Workout.find().populate('user').exec(); //get full user info
@@ -49,11 +37,6 @@ export const getAll = async (req, res) => {
 
 export const getAllByUserId = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
         //get data from req
         const userId = req.params.userId;
 
@@ -70,12 +53,6 @@ export const getAllByUserId = async (req, res) => {
 
 export const getAllByCurrentUser = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
         //get data from req
         const userId = req.body.user.id;
 
@@ -91,12 +68,6 @@ export const getAllByCurrentUser = async (req, res) => {
 
 export const getOne = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
         //get data from req
         const workoutId = req.params.id;
 
@@ -113,12 +84,6 @@ export const getOne = async (req, res) => {
 
 export const remove = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
         //get data from req
         const workoutId = req.params.id;
 
@@ -138,12 +103,6 @@ export const remove = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
-        // Check for validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
         //get data from req
         const workoutId = req.params.id;
         

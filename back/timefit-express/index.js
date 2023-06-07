@@ -31,13 +31,13 @@ app.post('/auth/registration', registrationValidation, validationErrorsMiddlewar
 app.post('/auth/login', UserController.login);
 app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
 
-app.post('/workouts', authMiddleware, workoutValidation, WorkoutController.create);
+app.post('/workouts', authMiddleware, workoutValidation, validationErrorsMiddleware, WorkoutController.create);
 app.get('/workouts', authMiddleware, WorkoutController.getAll);
 app.get('/workouts/me', authMiddleware, WorkoutController.getAllByCurrentUser);
 app.get('/workouts/:id', authMiddleware, WorkoutController.getOne);
 app.get('/workouts/user/:userId', authMiddleware, WorkoutController.getAllByUserId);
 app.delete('/workouts/:id', authMiddleware, WorkoutController.remove);
-app.patch('/workouts/:id', authMiddleware, workoutValidation, WorkoutController.update);
+app.patch('/workouts/:id', authMiddleware, workoutValidation, validationErrorsMiddleware, WorkoutController.update);
 
 // Starting the server on port 4444 and handling any potential errors
 app.listen(PORT, (err) => {
