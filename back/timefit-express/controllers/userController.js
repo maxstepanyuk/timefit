@@ -12,7 +12,6 @@ export const registration = async (req, res) => {
         const candidateLogin = await UserModel.findOne({ login }) //find by username
         const candidateEmail = await UserModel.findOne({ email }) //find by email
         const errorMessages = {};
-        let errorLogin;
 
         if (candidateLogin) {
             errorMessages.login = "A user with that login already exists";
