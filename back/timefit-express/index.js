@@ -6,6 +6,7 @@ import { registrationValidation } from './validations/registrationValidation.js'
 import { workoutValidation } from './validations/workoutValidation.js'
 
 import authMiddleware from './middleware/authMiddleware.js'
+import validationErrorsMiddleware from './middleware/validationErrorsMiddleware.js'
 
 import * as UserController from './controllers/userController.js'
 import * as WorkoutController from './controllers/workoutController.js';
@@ -25,7 +26,7 @@ app.use(express.json()) // Middleware to parse incoming JSON data
 
 // Handling requests
 app.get('/', (req, res) => { res.send('OK'); });
-app.post('/auth/registration', registrationValidation, UserController.registration);
+app.post('/auth/registration', registrationValidation, validationErrorsMiddleware, UserController.registration);
 app.post('/auth/login', UserController.login);
 app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
 

@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { validationResult } from 'express-validator';
 import UserModel from './../models/User.js'
 import jwt from 'jsonwebtoken';
 
@@ -7,11 +6,6 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 export const registration = async (req, res) => {
     try {
-        //check for any validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json(errors.array());
-        }
         //get data from req
         const { login, name, email, password } = req.body;
         //check in db
@@ -60,7 +54,7 @@ export const registration = async (req, res) => {
 };
 
 const generateJwt = (payload) => {
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: "5m" })
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: "60m" })
 }
 
 export const login = async (req, res) => {
