@@ -6,11 +6,15 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
+import axios from './../api/axios';
+
 import './Register.css';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+
+const REGISTER_URL = '/auth/registration';
 
 const Register = () => {
     // to set reference
@@ -96,38 +100,43 @@ const Register = () => {
         if (!valid) {
             setErrMsg("Invalid Entry");
             return;
+        }  
+        // axios
+        try {
+            // post
+            const response = await axios.post(REGISTER_URL,
+                JSON.stringify({
+                    login: user,
+                    password: pwd,
+                    email: email
+                }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            // response
+            console.log(response?.data);
+            console.log(response?.accessToken); // not implemented
+            console.log(JSON.stringify(response)) // not implemented
+            //clear
+            setUser('');
+            setPwd('');
+            setMatchPwd('');
+            setEmail('');
+
+            setSuccess(true);
+        } catch (err) {
+            console.log(err)
+            if (!err?.response) {
+                setErrMsg('No Server Response');
+            } else if (err.response?.status === 409) {
+                setErrMsg('Username or Email Taken');
+            } else {
+                setErrMsg('Registration Failed')
+            }
+            errRef.current.focus();
         }
-        setSuccess(valid);
-
-        // todo - axios
-
-        // try {
-        //     const response = await axios.post(REGISTER_URL,
-        //         JSON.stringify({ user, pwd }),
-        //         {
-        //             headers: { 'Content-Type': 'application/json' },
-        //             withCredentials: true
-        //         }
-        //     );
-        //     console.log(response?.data);
-        //     console.log(response?.accessToken);
-        //     console.log(JSON.stringify(response))
-        //     setSuccess(true);
-        //     //clear state and controlled inputs
-        //     //need value attrib on inputs for this
-        //     setUser('');
-        //     setPwd('');
-        //     setMatchPwd('');
-        // } catch (err) {
-        //     if (!err?.response) {
-        //         setErrMsg('No Server Response');
-        //     } else if (err.response?.status === 409) {
-        //         setErrMsg('Username Taken');
-        //     } else {
-        //         setErrMsg('Registration Failed')
-        //     }
-        //     errRef.current.focus();
-        // }
     }
 
     // if success true - link to login, if false - register :
