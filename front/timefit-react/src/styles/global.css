@@ -1,0 +1,12 @@
+:root {
+    --background: #1e90ff;
+    --valid: #32cd32;
+    --invalid: #ff0000;
+    --error: #b22222;
+    --error-bg: #ffb6c1;
+    --text: #ffffff;
+    --text-bg: #000000;
+    --background-alpha: rgba(0,0,0,0.4);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
