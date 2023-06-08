@@ -78,19 +78,20 @@ const Register = () => {
     // for displaying error message, if fields change - clear error message 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd, matchPwd])
+    }, [user, pwd, matchPwd, email])
 
     // handle Submit form
     const handleSubmit = async (e) => {
         //to use custom handleSubmit
-        // e.preventDefault();
+        e.preventDefault();
 
         // check
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
+        const v3 = EMAIL_REGEX.test(email);
 
-        const valid = v1 && v2;
-        console.log(valid, 'valid');
+        const valid = v1 && v2 && v3;
+        // console.log(valid, 'valid');
 
         if (!valid) {
             setErrMsg("Invalid Entry");
