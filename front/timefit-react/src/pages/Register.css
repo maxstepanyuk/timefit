@@ -1,0 +1,44 @@
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: var(--text-bg);
+    color: var(--text);
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions>svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+    display: none;
+}
+
+.valid {
+    color: var(--valid);
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: var(--invalid);
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: var(--error-bg);
+    color: var(--error);
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
