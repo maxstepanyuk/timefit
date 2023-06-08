@@ -25,8 +25,6 @@ const app = express(); // Creating an instance of the express application
 app.use(express.json()) // Middleware to parse incoming JSON data
 
 // Handling requests
-app.get('/', (req, res) => { res.status(200).send('OK'); });
-
 app.post('/auth/registration', registrationValidation, validationErrorsMiddleware, UserController.registration);
 app.post('/auth/login', UserController.login);
 app.get('/auth/myinfo', authMiddleware, UserController.myinfo);
@@ -38,6 +36,8 @@ app.get('/workouts/:id', authMiddleware, WorkoutController.getOne);
 app.get('/workouts/user/:userId', authMiddleware, WorkoutController.getAllByUserId);
 app.delete('/workouts/:id', authMiddleware, WorkoutController.remove);
 app.patch('/workouts/:id', authMiddleware, workoutValidation, validationErrorsMiddleware, WorkoutController.update);
+
+app.get('/*', (req, res) => { res.status(404).send('404'); });
 
 // Starting the server on port 4444 and handling any potential errors
 app.listen(PORT, (err) => {
